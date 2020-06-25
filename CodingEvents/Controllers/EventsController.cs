@@ -52,11 +52,13 @@ namespace CodingEvents.Controllers
         }
 
         //Editing action method to edit fields submitted
-
+        [HttpGet]
+        [Route("Events/Edit/{eventId}")]
         public IActionResult Edit(int eventId)
         {
-            ViewBag.eventToEdit = EventData.GetById(eventId);
-            ViewBag.Title = "Edit Event " + ViewBag.eventToEdit.Name + "(id = " + ViewBag.eventToEdit.Id + ")";
+            Event editingEvent = EventData.GetById(eventId);
+            ViewBag.eventToEdit = editingEvent;
+            ViewBag.Title = "Edit Event " + editingEvent.Name + "(id = " + editingEvent.Id + ")";
             return View();
         }
 
@@ -64,9 +66,9 @@ namespace CodingEvents.Controllers
         [Route("/Events/Edit")]
         public IActionResult SubmitEditEventForm(int eventId, string name, string description)
         {
-            ViewBag.eventToEdit = EventData.GetById(eventId);
-            ViewBag.eventToEdit.Name = name;
-            ViewBag.eventToEdit.Description = description;
+            Event editingEvent = EventData.GetById(eventId);
+            editingEvent.Name = name;
+            editingEvent.Description = description;
             return Redirect("/Events");
         }
     }
